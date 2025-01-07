@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './Character.css'
+import ImageTurn from '../ImageTurn/ImageTurn'
 
 const Character = () => {
   const [character, setCharacter] = useState([])
@@ -7,20 +8,13 @@ const Character = () => {
     const getCharacter = async () => {
       const response = await fetch(`https://rickandmortyapi.com/api/character`)
       const characterJson = await response.json()
-      // console.log(characterJson.results)
       return characterJson.results
     }
     getCharacter().then((res) => {
-      setCharacter(res.results)
+      setCharacter(res)
     })
   }, [])
 
-  // const [character, setCharacter] = useState([])
-  // useEffect(() => {
-  //   fetch(`https://rickandmortyapi.com/api/character`)
-  //     .then((res) => res.json())
-  //     .then((res) => setCharacter(res.results))
-  // }, [])
   return (
     <div className='character'>
       <h1>Character Component</h1>
@@ -28,7 +22,8 @@ const Character = () => {
       {character.map((c) => (
         <div key={c.id}>
           <h2>{c.name}</h2>
-          <img src={c.image} alt={c.name} />
+          <ImageTurn src={c.image} alt={c.name} />
+
           <p>{c.status}</p>
         </div>
       ))}
